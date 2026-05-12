@@ -1,6 +1,5 @@
 {
-  "buildCommand": "npm run vercel:build",
-  "outputDirectory": "frontend/dist/orions-gallery",
+  "buildCommand": "npm --prefix frontend install && npm --prefix frontend run build",
   "functions": {
     "api/index.ts": {
       "memory": 1024,
