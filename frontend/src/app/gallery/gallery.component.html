@@ -10,7 +10,7 @@
   } @else {
     <div class="photo-grid">
       @for (photo of photos; track photo.id) {
-        <div class="photo-card">
+        <div class="photo-card" (click)="openPhoto(photo)">
           <img [src]="photo.url" [alt]="photo.title" class="photo-img" loading="lazy" />
           <div class="photo-info">
             <h3>{{ photo.title }}</h3>
@@ -21,3 +21,17 @@
     </div>
   }
 </section>
+
+<!-- Lightbox modal -->
+@if (selectedPhoto) {
+  <div class="lightbox-overlay" (click)="closePhoto()">
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <button class="lightbox-close" (click)="closePhoto()" aria-label="Close">&times;</button>
+      <img [src]="selectedPhoto.url" [alt]="selectedPhoto.title" class="lightbox-img" />
+      <div class="lightbox-caption">
+        <h3>{{ selectedPhoto.title }}</h3>
+        <p>{{ selectedPhoto.description }}</p>
+      </div>
+    </div>
+  </div>
+}
