@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
@@ -17,11 +17,25 @@ export class GalleryComponent implements OnInit {
   photos: CatPhoto[] = [];
   loading = true;
   error: string | null = null;
+  selectedPhoto: CatPhoto | null = null;
 
   ngOnInit(): void {
     this.http.get<CatPhoto[]>('/api/gallery/photos').subscribe({
       next:  (data) => { this.photos = data; this.loading = false; },
       error: (err)  => { this.error = 'Could not load photos. Is the backend running?'; this.loading = false; console.error(err); },
     });
+  }
+
+  openPhoto(photo: CatPhoto): void {
+    this.selectedPhoto = photo;
+  }
+
+  closePhoto(): void {
+    this.selectedPhoto = null;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.closePhoto();
   }
 }
